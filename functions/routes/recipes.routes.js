@@ -3,6 +3,7 @@ import express from 'express';
 import {
   getAllRecipes,
   collectionName,
+  addRecipe,
 } from '../controller/recipes.controller.js';
 
 const recipesRoutes = express.Router();
@@ -23,26 +24,21 @@ const recipesRoutes = express.Router();
  *              type: array
  *              items:
  *                type: object
- *                properties:
- *                  id:
- *                    type: number
- *                  name:
- *                    type: string
  *       400:
  *         description: Bad request
  */
 recipesRoutes.get(
-    `/api/recipes`,
+    `/api/${collectionName}`,
     getAllRecipes,
 );
 
 /**
  * @openapi
- * '/api/hero':
+ * '/api/recipes':
  *  post:
  *     tags:
- *     - Hero
- *     summary: Create a hero
+ *     - Recipes
+ *     summary: Add a recipe
  *     requestBody:
  *      required: true
  *      content:
@@ -55,10 +51,41 @@ recipesRoutes.get(
  *            properties:
  *              id:
  *                type: number
- *                default: 2
+ *                default: 0
  *              name:
  *                type: string
- *                default: New Hero Name
+ *                default: ''
+ *              description:
+ *                type: string
+ *                default: '' 
+ *              ingredients:
+ *                type: array
+ *              totalTime:
+ *                type: number
+ *                default: 0
+ *              cookTime:
+ *                type: number
+ *                default: 0
+ *              steps:
+ *                type: array
+ *              image:
+ *                type: string
+ *                default: ''
+ *              creator:
+ *                type: string
+ *                default: ''
+ *              serving:
+ *                type: number
+ *                default: 0
+ *              like:
+ *                type: number
+ *                default: 0
+ *              createdAt:
+ *                type: string
+ *                default: ''
+ *              updatedAt:
+ *                type: string
+ *                default: ''
  *     responses:
  *      201:
  *        description: Created
@@ -67,7 +94,7 @@ recipesRoutes.get(
  *      404:
  *        description: Not Found
  */
-// heroRoutes.post('/api/hero', addHeroHandler);
+recipesRoutes.post(`/api/${collectionName}`, addRecipe);
 
 /**
  * @openapi
