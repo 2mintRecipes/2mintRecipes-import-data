@@ -1,7 +1,7 @@
 /* eslint-disable require-jsdoc */
 /* eslint-disable valid-jsdoc */
 
-import {db} from '../config/firebase.js';
+import {db, firebase} from '../config/firebase.js';
 import Recipe from '../dto/recipes.dto.js';
 
 export const collectionName = 'recipes';
@@ -23,11 +23,14 @@ export async function getAllRecipes(req, res) {
 export async function addRecipe(req, res) {
   try {
     const creatorRef = db.doc(req.body.creator);
-    // const recipeObject = Recipe.fromJson(req.body, creatorRef);
+    const now = firebase.firestore.Timestamp.now();
     const recipeObject = {
-      creator: creatorRef,
       ...req.body,
+      creator: creatorRef,
+      creationTime: now,
+      lastModifiedTime: now,
     };
+    
     const recipe = db.collection(collectionName).doc();
     recipe.set(recipeObject);
 

@@ -11,4 +11,4 @@ admin.initializeApp({
 
 const db = admin.firestore();
 
-export {db, admin};
+export {db, admin as firebase};
